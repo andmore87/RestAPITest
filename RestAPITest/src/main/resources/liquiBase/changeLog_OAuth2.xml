@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet id="oauth2_db_model_create" author="andmore" context="test, developer, pre-produccion">
+        <createTable tableName="oauth_access_token">
+            <column name="token_id" type="VARCHAR(256)"/>
+            <column name="token" type="BLOB"/>
+            <column name="authentication_id" type="VARCHAR(256)"/>
+            <column name="user_name" type="VARCHAR(256)"/>
+            <column name="client_id" type="VARCHAR(256)"/>
+            <column name="authentication" type="BLOB"/>
+            <column name="refresh_token" type="VARCHAR(256)"/>
+        </createTable>
+        
+        <createTable tableName="oauth_client_details">
+            <column name="client_id" type="VARCHAR(256)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="resource_ids" type="VARCHAR(256)"/>
+            <column name="client_secret" type="VARCHAR(256)"/>
+            <column name="scope" type="VARCHAR(256)"/>
+            <column name="authorized_grant_types" type="VARCHAR(256)"/>
+            <column name="web_server_redirect_uri" type="VARCHAR(256)"/>
+            <column name="authorities" type="VARCHAR(256)"/>
+            <column name="access_token_validity" type="INT"/>
+            <column name="refresh_token_validity" type="INT"/>
+            <column name="additional_information" type="VARCHAR(4096)"/>
+        </createTable>
+        
+        <createTable tableName="oauth_code">
+            <column name="code" type="VARCHAR(256)"/>
+            <column name="authentication" type="BLOB"/>
+        </createTable>
+        
+        <createTable tableName="oauth_refresh_token">
+            <column name="token_id" type="VARCHAR(256)"/>
+            <column name="token" type="BLOB"/>
+            <column name="authentication" type="BLOB"/>
+        </createTable>
+    </changeSet>
+
+	<changeSet id="oauth_client_details_Inserts" author="cgarcia" context="test">
+		<comment>Insert one OAuth2Client</comment>
+		<insert tableName="oauth_client_details">
+			<column name="client_id" 				value="smallNotesExternalWebApp_clientID" />
+			<column name="client_secret" 			value="smallNotesExternalWebApp_clientPASSWORD" />
+			<column name="authorized_grant_types" 	value="authorization_code" />
+			<column name="authorities" 				value="ROLE_USER, ROLE_CLIENT" />
+			<column name="scope"					value="read,write" />	
+			<column name="resource_ids"				value="api" />				
+			
+			<column name="access_token_validity"	value="500" />				
+			<column name="refresh_token_validity"	value="50000" />				
+		</insert>
+	</changeSet>
+</databaseChangeLog>

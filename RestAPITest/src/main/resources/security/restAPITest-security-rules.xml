@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xmlns:oauth="http://www.springframework.org/schema/security/oauth2" 
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+				http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+				http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd">
+
+	<sec:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager" entry-point-ref="oauthAuthenticationEntryPoint" xmlns="http://www.springframework.org/schema/security">
+		<sec:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+		<sec:anonymous enabled="false" />
+		<sec:http-basic entry-point-ref="oauthAuthenticationEntryPoint" />
+		<sec:custom-filter ref="clientCredentialsTokenEndpointFilter" before="BASIC_AUTH_FILTER" />
+		<sec:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</sec:http>
+
+	<sec:http pattern="/v1/api/notes/**" create-session="never" use-expressions="true"
+			   entry-point-ref="oauthAuthenticationEntryPoint" access-decision-manager-ref="accessDecisionManager" xmlns="http://www.springframework.org/schema/security">
+		<sec:anonymous 	   enabled="false" />
+		<sec:custom-filter 			ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
+		<sec:access-denied-handler	ref="oauthAccessDeniedHandler" />
+		<sec:expression-handler		ref="oauthWebExpressionHandler" />
+	</sec:http>
+	
+	
+	<sec:http  access-denied-page="/WEB-INF/views/messages/notPrivileged.jsp" disable-url-rewriting="true">
+		<sec:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<sec:form-login authentication-failure-url="/login.jsp" login-page="/login.jsp"  default-target-url="/home.jsp"  login-processing-url="/j_spring_security_check"/>
+		<sec:logout 	logout-success-url="/login.jsp" logout-url="/logout" />
+		<sec:anonymous />
+	</sec:http>
+</beans>
+  

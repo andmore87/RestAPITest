@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet id="small_notes_inserts" author="andmore" context="test, developer">
+		<comment>Inserts for small_notes_users</comment>
+		<insert tableName="smallNotesUsers">
+			<column name="id" 		value="1" />
+			<column name="email" 	value="user1@smallnotes.es" />
+			<column name="secret"	value="81dc9bdb52d04dc20036dbd8313ed055" />
+			<column name="name" 	value="Carlos García Pérez" />
+			<column name="role" 	value="ROLE_USER" />
+		</insert>
+		<insert tableName="smallNotesUsers">
+			<column name="id" 		value="2" />
+			<column name="email" 	value="user2@smallnotes.es" />
+			<column name="secret"	value="81dc9bdb52d04dc20036dbd8313ed055" />
+			<column name="name" 	value="Cristóbal García" />
+			<column name="role" 	value="ROLE_USER" />
+		</insert>
+		<insert tableName="notes">
+			<column name="id" 		value="1" />
+			<column name="title" 	value="titulo_1" />
+			<column name="content"	value="content_1" />
+			<column name="created" 	value="2010-09-24 12:00:00" />
+			<column name="owner" 	value="1" />
+		</insert>
+		<insert tableName="notes">
+			<column name="id" 		value="2" />
+			<column name="title" 	value="titulo_2" />
+			<column name="content"	value="content_2" />
+			<column name="created" 	value="2010-09-24 13:00:00" />
+			<column name="owner" 	value="1" />
+		</insert>
+		<insert tableName="notes">
+			<column name="id" 		value="3" />
+			<column name="title" 	value="titulo_3" />
+			<column name="content"	value="content_3" />
+			<column name="created" 	value="2010-09-24 13:20:00" />
+			<column name="owner" 	value="1" />
+		</insert>
+		<insert tableName="notes">
+			<column name="id" 		value="4" />
+			<column name="title" 	value="titulo note 4" />
+			<column name="content"	value="content note 4" />
+			<column name="created" 	value="2010-09-24 13:00:00" />
+			<column name="owner" 	value="2" />
+		</insert>
+		<insert tableName="links">
+			<column name="id" 	value="1" />
+			<column name="url" 	value="http://www.carlos-garcia.es" />
+			<column name="noteId" 	value="1" />
+		</insert>
+		<insert tableName="links">
+			<column name="id" 	value="2" />
+			<column name="url" 	value="http://www.adictosaltrabajo.com" />
+			<column name="noteId" 	value="1" />
+		</insert>
+		<insert tableName="links">
+			<column name="id" 	value="3" />
+			<column name="url" 	value="http://www.autentia.com" />
+			<column name="noteId" 	value="3" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>
